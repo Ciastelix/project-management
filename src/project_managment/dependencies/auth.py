@@ -24,37 +24,35 @@ class AuthRepository:
         self.session_factory = session_factory
 
     async def get_current_user(self, token: str = Depends(oauth2_scheme)):
-        print("dupa")
-        return {"dupa": "dupa"}
-        # credentials_exception = HTTPException(
-        #     status_code=status.HTTP_401_UNAUTHORIZED,
-        #     detail="Invalid authentication credentials",
-        #     headers={"WWW-Authenticate": "Bearer"},
-        # )
-        # try:
-        #     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        #     id_str: str = payload.get("sub")
-        #     if id_str is None:
-        #         raise HTTPException(
-        #             status_code=status.HTTP_401_UNAUTHORIZED,
-        #             detail="Token is missing user ID",
-        #             headers={"WWW-Authenticate": "Bearer"},
-        #         )
-        # except PyJWTError:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_401_UNAUTHORIZED,
-        #         detail="Could not decode token",
-        #         headers={"WWW-Authenticate": "Bearer"},
-        #     )
+        credentials_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            id_str: str = payload.get("sub")
+            if id_str is None:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Token is missing user ID",
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+        except PyJWTError:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not decode token",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         
-        # with self.session_factory() as session:
-        #     user = session.query(User).filter_by(id=id_str).first()
-        #     if user is None:
-        #         raise HTTPException(
-        #             status_code=status.HTTP_404_NOT_FOUND,
-        #             detail="User not found",
-        #         )
-        # return user
+        with self.session_factory() as session:
+            user = session.query(User).filter_by(id=id_str).first()
+            if user is None:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="User not found",
+                )
+        return user
 
     # Get user
     def get_user(self, id: str):

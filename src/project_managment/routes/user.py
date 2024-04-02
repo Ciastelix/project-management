@@ -10,7 +10,6 @@ from fastapi import HTTPException
 from dependencies.auth import oauth2_scheme
 
 router = APIRouter()
-#TODO: fix UUID type
 @router.get("/", response_model=list[UserInResponse], status_code=status.HTTP_200_OK)
 @inject
 def read_users(user_service: UserService = Depends(Provide[Container.user_service])):
