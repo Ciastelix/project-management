@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Boolean
 from sqlalchemy.sql.schema import ForeignKey
-from project_managment.db import Base
+from db import Base
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 class User(Base):

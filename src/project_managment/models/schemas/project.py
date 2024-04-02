@@ -2,13 +2,13 @@ from pydantic import BaseModel
 from uuid import UUID
 from typing import Optional
 from datetime import datetime
-class ProjectIn(BaseModel):
+class ProjectInCreate(BaseModel):
     name: str
     description: str
     start_date: Optional[datetime]
     end_date: Optional[datetime]
     
-class ProjectInDB(ProjectIn):
+class ProjectInDB(ProjectInCreate):
     id: UUID
     class Config:
         orm_mode = True

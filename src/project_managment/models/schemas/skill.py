@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 from uuid import UUID
 
-class SkillIn(BaseModel):
+class SkillInCreate(BaseModel):
     name: str
 
-class SkillInDB(SkillIn):
+class SkillInDB(SkillInCreate):
     id: UUID
     class Config:
         orm_mode = True

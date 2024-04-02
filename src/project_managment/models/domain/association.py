@@ -1,6 +1,6 @@
 from sqlalchemy import Table, Column, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
-from project_managment.db import Base
+from db import Base
 
 # tabele wiele do wielu
 worker_skill = Table('worker_skill', Base.metadata,
