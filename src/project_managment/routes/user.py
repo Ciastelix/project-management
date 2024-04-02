@@ -41,6 +41,7 @@ def delete_user(user_id: UUID, user_service: UserService = Depends(Provide[Conta
 def login_user(form_data: OAuth2PasswordRequestForm = Depends(), auth_service: AuthService = Depends(Provide[Container.auth_service])):
     return auth_service.login(form_data.username, form_data.password)
 
+@inject
 async def get_current_user(token: str = Depends(oauth2_scheme), auth_service: AuthService = Depends(Provide[Container.auth_service])):
     user = auth_service.get_current_user(token)
     if user is None:
@@ -51,6 +52,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), auth_service: Au
         )
     return user 
 
-@router.get("/me/", response_model=dict, status_code=status.HTTP_200_OK, tags=["users"])
+@router.get("/me/", response_model=UserInResponse, status_code=status.HTTP_200_OK, tags=["users"])
+@inject
 async def read_users_me(current_user: dict = Depends(get_current_user)):
-    return current_user
+    return await current_user

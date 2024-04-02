@@ -8,6 +8,7 @@ from jwt import PyJWTError
 from fastapi import HTTPException
 from datetime import timedelta
 from models.domain.user import User
+from models.schemas.user import UserInResponse
 from services.security import verify_password
 from sqlalchemy.orm import Session
 from contextlib import AbstractContextManager
@@ -46,15 +47,14 @@ class AuthRepository:
             )
         
         with self.session_factory() as session:
-            user = session.query(User).filter_by(id=id_str).first()
+            user = session.query(User).filter_by(id=UUID(id_str)).first()
             if user is None:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="User not found",
                 )
-        return user
+        return UserInResponse(**user.__dict__)
 
-    # Get user
     def get_user(self, id: str):
         with self.session_factory() as session:
             id = UUID(id)
