@@ -25,11 +25,6 @@ class AuthRepository:
         self.session_factory = session_factory
 
     async def get_current_user(self, token: str = Depends(oauth2_scheme)):
-        credentials_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             id_str: str = payload.get("sub")
