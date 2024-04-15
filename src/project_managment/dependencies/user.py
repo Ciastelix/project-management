@@ -37,7 +37,8 @@ class UserRepository:
             if user_new.password:
                 user_new.password = get_password_hash(user_new.password)
             user = session.query(User).filter_by(id=user_id).first()
-            user.update(**user_new.model_dump())
+            for key, value in user_new.model_dump().items():
+                    setattr(user, key, value)
             session.commit()
             session.refresh(user)
             return user

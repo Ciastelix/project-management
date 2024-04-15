@@ -15,7 +15,7 @@ class WorkerInResponse(WorkerInCreate):
     projects: list[Project] = []
     skills: list[Skill] = []
     class Config:
-        orm_mode = True
+        from_attributes = True
 class WorkerInUpdate(BaseModel):
     role: str
     location: str

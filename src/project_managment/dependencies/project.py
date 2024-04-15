@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from models.domain.project import Project
 from models.schemas.project import ProjectInCreate, ProjectInUpdate
 from uuid import UUID
+from models.domain.worker import Worker
+
 class ProjectRepository:
     def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]] ) -> None:
         self.session_factory = session_factory
@@ -46,18 +48,21 @@ class ProjectRepository:
     def add_to_project(self, project_id:UUID, worker_id:UUID) -> Project:
         with self.session_factory() as session:
             project = session.query(Project).filter_by(id=project_id).first()
-            project.workers.append(worker_id)
+            worker = session.query(Worker).filter_by(id=worker_id).first()
+            if not worker:
+                raise Exception("Worker not found") 
+            project.workers.append(worker)
             session.commit()
             session.refresh(project)
         return project
-
 
     def remove_from_project(self, project_id:UUID, worker_id:UUID) -> Project:
         with self.session_factory() as session:
             project = session.query(Project).filter_by(id=project_id).first()
-            project.workers.remove(worker_id)
+            worker = session.query(Worker).filter_by(id=worker_id).first()
+            if not worker:
+                raise Exception("Worker not found")  # replace with your preferred way of handling errors
+            project.workers.remove(worker)
             session.commit()
             session.refresh(project)
         return project
-        
-    

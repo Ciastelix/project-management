@@ -7,7 +7,7 @@ class SkillInCreate(BaseModel):
 class SkillInDB(SkillInCreate):
     id: UUID
     class Config:
-        orm_mode = True
+        from_attributes = True
         
 class SkillInResponse(SkillInDB):
     pass
@@ -15,5 +15,5 @@ class SkillInResponse(SkillInDB):
 class SkillInUpdate(BaseModel):
     name: str
     class Config:
-        orm_mode = True
+        from_attributes = True
 

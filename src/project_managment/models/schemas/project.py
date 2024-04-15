@@ -11,7 +11,7 @@ class ProjectInCreate(BaseModel):
 class ProjectInDB(ProjectInCreate):
     id: UUID
     class Config:
-        orm_mode = True
+        from_attributes = True
 class ProjectInResponse(ProjectInDB):
     is_active: bool
     

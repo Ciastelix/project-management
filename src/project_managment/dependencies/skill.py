@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from models.domain.skill import Skill
 from models.schemas.skill import SkillInCreate, SkillInUpdate
 from uuid import UUID
+from models.domain.worker import Worker
 class SkillRepository:
     def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]] ) -> None:
         self.session_factory = session_factory
@@ -46,7 +47,10 @@ class SkillRepository:
     def add_to_skill(self, skill_id:UUID, worker_id:UUID) -> Skill:
         with self.session_factory() as session:
             skill = session.query(Skill).filter_by(id=skill_id).first()
-            skill.workers.append(worker_id)
+            worker = session.query(Worker).filter_by(id=worker_id).first() 
+            if not worker:
+                raise Exception("Worker not found")  
+            skill.workers.append(worker)
             session.commit()
             session.refresh(skill)
         return skill
@@ -55,7 +59,10 @@ class SkillRepository:
     def remove_from_skill(self, skill_id:UUID, worker_id:UUID) -> Skill:
         with self.session_factory() as session:
             skill = session.query(Skill).filter_by(id=skill_id).first()
-            skill.workers.remove(worker_id)
+            worker = session.query(Worker).filter_by(id=worker_id).first()  
+            if not worker:
+                raise Exception("Worker not found")  
+            skill.workers.remove(worker)
             session.commit()
             session.refresh(skill)
         return skill
