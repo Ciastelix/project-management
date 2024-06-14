@@ -1,0 +1,59 @@
+{
+  "name": "@front/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "nx serve",
+    "build": "nx build",
+    "test": "nx test"
+  },
+  "private": true,
+  "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.7.2",
+    "js-cookie": "^3.0.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.23.1",
+    "tslib": "^2.6.3"
+  },
+  "devDependencies": {
+    "@nx/eslint": "18.3.4",
+    "@nx/eslint-plugin": "18.3.4",
+    "@nx/js": "18.3.4",
+    "@nx/react": "18.3.4",
+    "@nx/vite": "18.3.4",
+    "@nx/web": "18.3.4",
+    "@nx/workspace": "18.3.4",
+    "@swc-node/register": "~1.8.0",
+    "@swc/cli": "~0.1.65",
+    "@swc/core": "~1.5.25",
+    "@swc/helpers": "~0.5.11",
+    "@testing-library/react": "14.0.0",
+    "@types/axios": "^0.14.0",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "18.16.9",
+    "@types/react": "18.2.33",
+    "@types/react-dom": "18.2.14",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/parser": "^7.12.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
+    "eslint": "~8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "jsdom": "~22.1.0",
+    "nx": "18.3.4",
+    "prettier": "^2.8.8",
+    "typescript": "~5.4.5",
+    "vite": "~5.0.13",
+    "vitest": "^1.6.0"
+  },
+  "nx": {
+    "includedScripts": []
+  }
+}

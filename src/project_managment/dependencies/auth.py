@@ -1,5 +1,5 @@
 from fastapi.security import OAuth2PasswordBearer
-from fastapi import  Depends, HTTPException
+from fastapi import Depends, HTTPException
 from datetime import datetime, timedelta
 from typing import Optional
 import jwt
@@ -15,19 +15,24 @@ from contextlib import AbstractContextManager
 from typing import Callable
 from fastapi import status
 from uuid import UUID
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
 SECRET_KEY = environ.get("JWT_SECRET") or "KUGhGukGHkuGKYfgiyt75igtyrt"
 ALGORITHM = environ.get("JWT_ALGORITHM") or "HS256"
+
+
 class AuthRepository:
 
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]] ) -> None:
+    def __init__(
+        self, session_factory: Callable[..., AbstractContextManager[Session]]
+    ) -> None:
         self.session_factory = session_factory
 
     async def get_current_user(self, token: str = Depends(oauth2_scheme)):
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            id_str: str = payload.get("sub")
+            id_str = payload.get("sub")
             if id_str is None:
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
@@ -40,9 +45,10 @@ class AuthRepository:
                 detail="Could not decode token",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        
+
         with self.session_factory() as session:
-            user = session.query(User).filter_by(id=UUID(id_str)).first()
+            id_str = UUID(id_str)
+            user = session.query(User).filter_by(id=id_str).first()
             if user is None:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
@@ -62,7 +68,7 @@ class AuthRepository:
         user = self.login(username, password)
         return user
 
-    def login(self, username:str, password:str) -> dict:
+    def login(self, username: str, password: str) -> dict:
         with self.session_factory() as session:
             usr = session.query(User).filter_by(username=username).first()
             if not usr:
@@ -77,8 +83,10 @@ class AuthRepository:
                     data={"sub": str(usr.id)}, expires_delta=access_token_expires
                 )
                 return {"access_token": access_token, "token_type": "bearer"}
-            
-    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None):
+
+    def create_access_token(
+        self, data: dict, expires_delta: Optional[timedelta] = None
+    ):
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.now() + expires_delta
