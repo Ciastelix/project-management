@@ -15,6 +15,9 @@ from contextlib import AbstractContextManager
 from typing import Callable
 from fastapi import status
 from uuid import UUID
+from models.domain.worker import Worker
+from models.schemas.user import WorkerInDB
+from sqlalchemy.orm import joinedload
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
@@ -49,12 +52,20 @@ class AuthRepository:
         with self.session_factory() as session:
             id_str = UUID(id_str)
             user = session.query(User).filter_by(id=id_str).first()
+            worker = session.query(Worker).filter_by(id=user.worker_id).first()
+            worker = (
+                session.query(Worker)
+                .options(joinedload(Worker.projects), joinedload(Worker.skills))
+                .first()
+            )
+            user = UserInResponse(**user.__dict__)
+            user.worker = WorkerInDB(**worker.__dict__)
             if user is None:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="User not found",
                 )
-        return UserInResponse(**user.__dict__)
+        return user
 
     def get_user(self, id: str):
         with self.session_factory() as session:

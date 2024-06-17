@@ -43,9 +43,6 @@ function Navbar() {
           <Link to="/">Home</Link>
         </li>
         <li className={styles['nav-item']} onClick={closeMenu}>
-          <Link to="/login">Login</Link>
-        </li>
-        <li className={styles['nav-item']} onClick={closeMenu}>
           <Link to="/workers">Workers</Link>
         </li>
       </ul>

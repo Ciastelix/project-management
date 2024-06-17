@@ -88,4 +88,5 @@ async def get_current_user(
 )
 @inject
 async def read_users_me(current_user=Depends(get_current_user)):
+
     return {"user": await current_user, "isValid": True}

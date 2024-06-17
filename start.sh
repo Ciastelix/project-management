@@ -20,7 +20,6 @@ export JWT_ALGORITHM="HS256"
 uvicorn main:app --reload &> backend.log &
 BACKEND_PID=$!
 
-
 cd ../../front
 
 
@@ -36,5 +35,5 @@ FRONTEND_PID=$!
 
 
 wait $FRONTEND_PID
-
 cleanup
+deactivate
