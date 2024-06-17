@@ -28,19 +28,11 @@ function Navbar() {
   return (
     <div className={styles['navbar']}>
       <h1 className={styles['brand']}>Duxio</h1>
-      <div className={styles['spacer']}></div>
-      <div className={styles['menu-icon-container']}>
-        <div className={styles['menu-icon']} onClick={toggleMenu}>
-          <div
-            className={isOpen ? styles['bar1-change'] : styles['bar1']}
-          ></div>
-          <div
-            className={isOpen ? styles['bar2-change'] : styles['bar2']}
-          ></div>
-          <div
-            className={isOpen ? styles['bar3-change'] : styles['bar3']}
-          ></div>
-        </div>
+
+      <div className={styles['menu-icon']} onClick={toggleMenu}>
+        <div className={isOpen ? styles['bar1-change'] : styles['bar1']}></div>
+        <div className={isOpen ? styles['bar2-change'] : styles['bar2']}></div>
+        <div className={isOpen ? styles['bar3-change'] : styles['bar3']}></div>
       </div>
       <ul
         className={`${styles['nav-links']} ${

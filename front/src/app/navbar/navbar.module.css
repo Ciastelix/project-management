@@ -1,7 +1,7 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Ensure vertical alignment is centered */
+  align-items: center;
   padding: 0px 10px;
   background-color: #848dc5;
   color: #fff;
@@ -9,19 +9,13 @@
   position: sticky;
   top: 0;
   z-index: 100;
+
+  position: relative;
 }
-.spacer {
-  flex-grow: 1; /* Ensures the brand is centered */
-}
-.menu-icon-container {
-  display: flex;
-  justify-content: flex-end; /* Aligns the menu icon to the right */
-  align-items: center; /* Center align the menu icon vertically */
-}
+
 .brand {
-  align-items: center;
-  justify-content: center;
   font-size: 2rem;
+  margin-right: auto;
 }
 
 .nav-links {
@@ -52,7 +46,7 @@
 }
 
 .menu-icon {
-  display: none; /* Ensure this is set to none to not display by default */
+  display: none;
   cursor: pointer;
 }
 
@@ -81,24 +75,37 @@
 }
 
 @media screen and (max-width: 768px) {
+  .navbar {
+    justify-content: center;
+  }
+
+  .menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   .nav-links {
+    display: none;
+  }
+
+  .nav-active {
     display: flex;
     flex-direction: column;
     width: 100%;
     text-align: center;
-    max-height: 0; /* Initially hidden */
-    overflow: hidden; /* Prevents content from spilling out */
-    transition: max-height 0.3s ease-out; /* Smooth transition for max-height */
-  }
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
 
-  .nav-active {
-    max-height: 500px; /* Adjust based on the total height of your links */
-  }
-
-  .menu-icon {
-    display: flex; /* Corrected to ensure it displays on smaller screens */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #848dc5;
+    z-index: 99;
   }
 }
