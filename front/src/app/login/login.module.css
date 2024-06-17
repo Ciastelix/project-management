@@ -1,58 +1,77 @@
 .container {
-  height: 100%;
+  background-image: url('https://e0.pxfuel.com/wallpapers/318/535/desktop-wallpaper-project-manager.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+  min-height: 100vh;
   width: 100%;
-  margin-top: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 2vw;
 }
 
 .login-form {
-  background-color: #e631319f;
+  background-color: rgba(81, 172, 159, 0.9);
   border-radius: 10%;
-  padding: 10vw 10vh;
+  padding: 5% 5%;
   display: flex;
   flex-direction: column;
-  width: 40vw;
+  width: 80%;
+  max-width: 500px;
+  box-sizing: border-box;
 }
 
+.form-label,
+.form-input,
+.submit-button {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  margin-bottom: 2vw;
+  font-size: calc(1rem + 0.5vw);
+  color: #cae5e1;
+}
 .form-label {
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #292929;
+  margin-bottom: 1vw;
+  width: fit-content;
 }
 
-.form-input {
-  margin-bottom: 20px;
-  font-size: 18px;
-  padding: 0.5rem;
+.form-input,
+.submit-button {
+  padding: 1vw;
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 0.75vw;
-  color: #292929;
+  border-radius: 20px;
+  background-color: #244520;
+  color: #fff;
 }
 
 .submit-button {
-  background-color: #ef4242;
-  font-size: 1.5rem;
-  text-align: center;
+  background-color: #5dac51;
+  font-size: calc(1rem + 1vw);
   cursor: pointer;
-  padding: 0.5rem;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 0.75vw;
-  color: #fff;
 }
 .submit-button:hover {
-  background-color: #eac3c3;
+  background-color: #bddeb8;
   border: 1px solid #aaa;
   color: #000;
 }
 .submit-button:active {
-  background-color: #9e0000;
+  background-color: #417839;
   border: 1px solid #888;
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  .login-form {
+    width: 60%;
+    padding: 5%;
+  }
+
+  .form-label,
+  .form-input,
+  .submit-button {
+    font-size: calc(1rem + 1vw);
+  }
 }

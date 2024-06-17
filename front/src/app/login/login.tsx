@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import styles from './login.module.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useEffect } from 'react';
+import { checkTokenValidity } from '../../services/auth';
 /* eslint-disable-next-line */
 export function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  if (Cookies.get('access_token')) {
-  }
+  useEffect(() => {
+    checkTokenValidity();
+  }, []);
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const formData = {
@@ -31,7 +34,7 @@ export function Login() {
             },
           })
           .then((res) => {
-            console.log(res.data.id);
+            console.log(res);
           })
           .catch((error) => {
             console.log(error);
@@ -47,24 +50,24 @@ export function Login() {
       <form onSubmit={handleSubmit} className={styles['login-form']}>
         <label htmlFor="username" className={styles['form-label']}>
           Username:
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className={styles['form-input']}
-          />
         </label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className={styles['form-input']}
+        />
         <label htmlFor="password" className={styles['form-label']}>
           Password:
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles['form-input']}
-          />
         </label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={styles['form-input']}
+        />
         <button type="submit" className={styles['submit-button']}>
           Login
         </button>
