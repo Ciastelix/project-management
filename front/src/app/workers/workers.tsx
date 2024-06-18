@@ -1,6 +1,7 @@
 import styles from './workers.module.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Worker {
   id: string;
@@ -19,7 +20,8 @@ interface Worker {
 
 export function Workers() {
   const [workers, setWorkers] = useState<Worker[]>([]);
-  const [showActive, setShowActive] = useState<boolean | null>(null); // null: show all, true: show active, false: show inactive
+  const [showActive, setShowActive] = useState<boolean | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -32,10 +34,13 @@ export function Workers() {
       });
   }, []);
 
-  // Filter workers based on active status
   const filteredWorkers = workers.filter(
     (worker) => showActive === null || worker.user.is_active === showActive
   );
+
+  const handleCardClick = (id: string) => {
+    navigate(`/worker/${id}`);
+  };
 
   return (
     <>
@@ -54,7 +59,12 @@ export function Workers() {
         {filteredWorkers.length > 0 ? (
           <>
             {filteredWorkers.map((worker) => (
-              <div className={styles['card']} key={worker.id}>
+              <div
+                className={styles['card']}
+                key={worker.id}
+                onClick={() => handleCardClick(worker.id)}
+                style={{ cursor: 'pointer' }}
+              >
                 <h2 className={styles['card-name']}>
                   {worker.user.name} {worker.user.surname}
                 </h2>
